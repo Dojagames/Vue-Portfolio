@@ -1,0 +1,13 @@
+body{
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background:  linear-gradient(135deg, rgba(132,45,158,1) 0%, rgba(49,94,156,1) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+*{
+  font-family: 'Abel', sans-serif;
+}
+

@@ -3,22 +3,22 @@ export default {
 
     data(){
         return {
-            pVaultImgs: ["../../src/assets/screenshots/pvault-1.png", "../../src/assets/screenshots/pvault-2.png", "../../src/assets/screenshots/pvault-3.png"],
+            pVaultImgs: ["/screenshots/pvault-1.png", "/screenshots/pvault-2.png", "/screenshots/pvault-3.png"],
             pVaultSelected: 0,
 
-            ccImgs: ["../../src/assets/screenshots/cc-1.png", "../../src/assets/screenshots/cc-2.png", "../../src/assets/screenshots/cc-3.png"],
+            ccImgs: ["/screenshots/cc-1.png", "/screenshots/cc-2.png", "/screenshots/cc-3.png"],
             ccSelected: 0,
 
-            deskLampImgs: ["../../src/assets/screenshots/desklamp-1.jpg", "../../src/assets/screenshots/desklamp-2.jpg", "../../src/assets/screenshots/desklamp-3.jpg"],
+            deskLampImgs: ["/screenshots/desklamp-1.jpg", "/screenshots/desklamp-2.jpg", "/screenshots/desklamp-3.jpg"],
             deskLampSelected: 0,
 
-            ArminImgs: ["../../src/assets/screenshots/Armin-1.png", "../../src/assets/screenshots/Armin-2.png", "../../src/assets/screenshots/Armin-3.png"],
+            ArminImgs: ["/screenshots/Armin-1.png", "/screenshots/Armin-2.png", "/screenshots/Armin-3.png"],
             ArminSelected: 0,
 
-            cc2Imgs: ["../../src/assets/screenshots/cc2-1.jpg", "../../src/assets/screenshots/cc2-2.jpg", "../../src/assets/screenshots/cc2-3.jpg"],
+            cc2Imgs: ["/screenshots/cc2-1.jpg", "/screenshots/cc2-2.jpg", "/screenshots/cc2-3.jpg"],
             cc2Selected: 0,
 
-            PwImgs: ["../../src/assets/screenshots/PW-1.png", "../../src/assets/screenshots/PW-2.png", "../../src/assets/screenshots/PW-3.png"],
+            PwImgs: ["/screenshots/PW-1.png", "/screenshots/PW-2.png", "/screenshots/PW-3.png"],
             PwSelected: 0,
 
             currentModal: null,
@@ -67,7 +67,7 @@ export default {
 
 <template>
     <div id="wrapper">
-        <img  @click="GoHome()" id="home" src="../../src/assets/pngs/back.png" style="position: fixed; left: 40px; top: 30px; width: 48px" class="cyclebtn">
+        <img  @click="GoHome()" id="home" src="/pngs/back.png" style="position: fixed; left: 40px; top: 30px; width: 48px" class="cyclebtn">
 
         <div class="tiles" id="currentlyworkingon">
             <h1>currently working on:</h1>
@@ -196,6 +196,15 @@ export default {
         text-align: center;
         font-size: 2.3rem;
         padding-top: 10px;
+    }
+
+    img{
+        -webkit-touch-callout: none; 
+        -webkit-user-select: none; 
+        -khtml-user-select: none; 
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
     }
 
     .tiles{

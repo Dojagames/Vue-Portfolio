@@ -53,7 +53,7 @@ export default {
 
     },
     created() {
-        
+        document.title = "my work";
     },
     mounted(){
         

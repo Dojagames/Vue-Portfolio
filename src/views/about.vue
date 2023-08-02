@@ -14,8 +14,11 @@ export default {
     watch: {
         
     },
-    mount: {
+    mounted() {
         
+    },
+    created() {
+        document.title = "about me";
     },
     methods: {
         GoHome(){

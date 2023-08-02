@@ -23,11 +23,16 @@ export default {
         document.title = 'portfolio';
       },
       ChangeWindow(_name){
+        // if(_name == "about"){
+        //   document.title = "about me";
+        // } else if(_name == "work"){
+        //   document.title = "my work";
+        // }
         this.$router.push('/' + _name);
       }
     },
     created() {
-
+      document.title = "portfolio";
     },
     mounted(){
 

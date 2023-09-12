@@ -46,7 +46,10 @@ export default {
 
 <template>
 
-
+  <div id="mobile" style="width: 80%; margin-left: 10%;">
+    <h1 style="color: white;">Mobile view coming soon...</h1>
+     <div style=" cursor: pointer;" @click="ChangeWindow('about')"><h2 style="text-decoration: underline; font-size: 4rem; text-align: center;">check out my about me page:</h2></div>
+  </div>
   <div id="viewContainer">
     <!-- <div id="gradient"></div> -->
     <div id="wrapper">
@@ -276,7 +279,9 @@ export default {
 
 
 
-
+  #mobile{
+    display: none;
+  }
 
 
 
@@ -510,24 +515,41 @@ export default {
   }
 
   @media only screen and (orientation: portrait) {
+    #viewContainer{
+      display: none;
+
+    }
+
+    #mobile{
+      display: block;
+      color: white;
+    }
+    
     h1{
-      margin-top: 40px;
-      margin-left: 40px;
+      margin-top: 10px;
+      margin-bottom: 20px;
       font-size: 6rem;
+      width: 100%;
+      text-align: center;
+      position: relative;
     }
 
     #wrapper{
       width: 90%;
     }
 
-    #headerNav {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      height: fit-content;
-
+    #header{
       display: flex;
-      flex-direction: column;
+      flex-direction: column;  
+    }
+
+    #headerNav {
+      position: relative;
+      height: fit-content;
+      justify-content: space-around;
+      display: flex;
+      left:0;
+      width: 76%;
     }
 
     .navBtn {
@@ -538,13 +560,19 @@ export default {
     }
 
     #centerContent {
-      margin-top: 10px;
+      margin-top: 100px;
+      position: absolute;
+      top:40%;
     }
 
     #centerContent p{
-      font-size: 5rem;
+      font-size: 3rem;
       color: rgba(255, 255, 255, 1);
+
+      line-height:normal;
+      font-weight: bold;
     }
+
 
     .modal-content {
       min-width: none;

@@ -9,6 +9,9 @@ export default {
             ccImgs: ["/screenshots/cc-1.png", "/screenshots/cc-2.png", "/screenshots/cc-3.png"],
             ccSelected: 0,
 
+            spotifyImgs: ["/screenshots/spotify-1.png", "/screenshots/spotify-2.png", "/screenshots/spotify-3.png"],
+            spotifySelected: 0,
+
             deskLampImgs: ["/screenshots/desklamp-1.jpg", "/screenshots/desklamp-2.jpg", "/screenshots/desklamp-3.jpg"],
             deskLampSelected: 0,
 
@@ -99,6 +102,18 @@ export default {
 
         <div class="tiles" id="pastProjects">
             <h1>past projects:</h1>
+
+            <div class="projectwrapper">
+                <div class="project">
+                    <a href="https://github.com/Dojagames/Vue-Spotify" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Spotify Playlist Editor - Vue Js/Spotify Api (2023)</h2></a>
+                        <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
+                            <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('spotify', 'l')">&lt;</h2>
+                            <a href="https://github.com/Dojagames/Vue-Spotify" target="_blank" class="imgBox"><img v-bind:src="spotifyImgs[spotifySelected]" class="cyclebtn"></a>
+                            <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('spotify', 'r')">&gt;</h2>
+                        </div>
+                        <h3>3d design & electronics are DIY too</h3>
+                </div>
+            </div>
 
             <div class="projectwrapper">
                 <div class="project">

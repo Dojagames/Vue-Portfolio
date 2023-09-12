@@ -111,7 +111,7 @@ export default {
                             <a href="https://github.com/Dojagames/Vue-Spotify" target="_blank" class="imgBox"><img v-bind:src="spotifyImgs[spotifySelected]" class="cyclebtn"></a>
                             <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('spotify', 'r')">&gt;</h2>
                         </div>
-                        <h3>3d design & electronics are DIY too</h3>
+                        <h3>tool to create, sort and filter playlists</h3>
                 </div>
             </div>
 

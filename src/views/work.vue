@@ -24,6 +24,9 @@ export default {
             PwImgs: ["/screenshots/PW-1.png", "/screenshots/PW-2.png", "/screenshots/PW-3.png"],
             PwSelected: 0,
 
+            ttt2Imgs: ["/screenshots/ttt2-1.png", "/screenshots/ttt2-2.png", "/screenshots/ttt2-3.png"],
+            ttt2Selected: 0,
+
             currentModal: null,
             activateModal: false,
         }
@@ -112,6 +115,18 @@ export default {
                             <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('spotify', 'r')">&gt;</h2>
                         </div>
                         <h3>tool to create, sort and filter playlists</h3>
+                </div>
+            </div>
+
+            <div class="projectwrapper">
+                <div class="project">
+                    <a href="https://github.com/Dojagames/ttt2" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Ultimate tic tac toe - Vue Js/Socket.io/node.js (2023)</h2></a>
+                        <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
+                            <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('ttt2', 'l')">&lt;</h2>
+                            <a href="https://github.com/Dojagames/ttt2" target="_blank" class="imgBox"><img v-bind:src="spotifyImgs[ttt2Selected]" class="cyclebtn"></a>
+                            <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('ttt2', 'r')">&gt;</h2>
+                        </div>
+                        <h3>Online ultimate tic tac toe</h3>
                 </div>
             </div>
 

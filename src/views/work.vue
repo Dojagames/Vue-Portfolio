@@ -90,13 +90,13 @@ export default {
                 </div>
 
                 <div class="project">
-                    <a href="https://github.com/Dojagames/Cryptchat" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">CryptChat - Socket.io / VueJs Chat App (2023)</h2></a>
+                    <a href="https://github.com/Dojagames/CryptChat-final" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">CryptChat - Socket.io / VueJs Chat App (2023)</h2></a>
                     <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
                         <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('cc', 'l')">&lt;</h2>
-                        <a href="https://github.com/Dojagames/Cryptchat" target="_blank" class="imgBox"><img v-bind:src="ccImgs[ccSelected]"></a>
+                        <a href="https://github.com/Dojagames/CryptChat-final" target="_blank" class="imgBox"><img v-bind:src="ccImgs[ccSelected]"></a>
                         <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('cc', 'r')">&gt;</h2>
                     </div>
-                    <h3>todo: backend, ui polishing<br> currently functioning as whatsapp backup viewer</h3>
+                    <h3>todo: redefine UI and mobile deployment</h3>
                 </div>
             </div>
         </div>
@@ -123,7 +123,7 @@ export default {
                     <a href="https://github.com/Dojagames/ttt2" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Ultimate tic tac toe - Vue Js/Socket.io/node.js (2023)</h2></a>
                         <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
                             <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('ttt2', 'l')">&lt;</h2>
-                            <a href="https://github.com/Dojagames/ttt2" target="_blank" class="imgBox"><img v-bind:src="spotifyImgs[ttt2Selected]" class="cyclebtn"></a>
+                            <a href="https://github.com/Dojagames/ttt2" target="_blank" class="imgBox"><img v-bind:src="ttt2Imgs[ttt2Selected]" class="cyclebtn"></a>
                             <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('ttt2', 'r')">&gt;</h2>
                         </div>
                         <h3>Online ultimate tic tac toe</h3>

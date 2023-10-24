@@ -37,7 +37,7 @@ export default {
         </h1>
 
 
-        <div class="aboutContainer leftBound">
+        <div class="aboutContainer leftBound" style="width: 100%;">
             <h1>Skills</h1>
             <div id="skillWrapper">
                 <br>
@@ -106,14 +106,14 @@ export default {
             
 
             
-        </div>
+        </div><br><br>
 
         <div class="aboutContainer rightBound">
             <h1>Developer journey</h1>
             <p class="aboutText">From a young age I was interested in technological concepts. Pursuing my dream to develop software, I completed an internship as software developer at Funkwerk Kölleda, in 2017. At the same time, I started my journey as a developer with PHP. In 2019 I switched to C++ and microcontroller development (Arduino). In the following year I finished my first DIY project, a self-designed desk lamp. During the 11th and 12th grade I had to write a term paper for which I chose the topic DIY smart home. Together with a classmate, I wrote a smart home system with its own voice assistant and a feature to implement commercial products. We also developed our own gadgets like weather stations, smart outlets and lamps. My final project in my CS class was a top-down shooter using Unity and C#. After highschool I wrote a chat app with ecryption in vanilla js with a friend. Later in 2021, I studied Computer Science at the Ilmenau University of Technology, later that year i dropped out of college for personal reasons. In 2022 I continued my journey as a developer with C#. I wrote a password manager and a few small Windows applications. Then I came back to web development and started rewriting the chat app.
-            In 2023, I used Vue.js to develop interfaces for my smart home system and to write 2 web apps, another password manager and this portfolio page.
+            In 2023, I used Vue.js to develop interfaces for my smart home system and to write 2 web apps, another password manager and this portfolio page. Later this year I wrote 3 multiplayer games in javascript with node / socket.io and vue.js, a spotify playlist editor with the spotify api and a new backend for my chat app.
            </p>
-        </div>
+        </div><br><br>
 
         <div class="aboutContainer leftBound">
             <h1>Hobbies</h1>
@@ -155,13 +155,13 @@ export default {
     .aboutContainer{
         margin-bottom: 50px;
         position: relative;
-        width: 100%;
+        width: 80%;
         /* background-color: rgba(255, 0, 0, 0.384); */
     }
 
     .aboutContainer h1{
-        font-style:oblique;
-        text-shadow: 0px 0px 12px black;
+        font-style:normal;
+        text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.267);
     }
 
     .aboutText{
@@ -173,6 +173,8 @@ export default {
 
     .rightBound{
         text-align: right;
+        width: 80%;
+        padding-left: 20%;
     }
 
 

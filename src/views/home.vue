@@ -58,6 +58,7 @@ export default {
         <div id="headerNav">
           <button class="navBtn" @click="ChangeWindow('about')">about me</button>
           <button class="navBtn" @click="ChangeWindow('work')">my work</button>
+          <button class="navBtn" @click="ChangeWindow('photo')">photography</button>
           <button class="navBtn" @click="OpenModal()" :class="{ activeBtnClass: activateModal }">contact</button>
         </div>
 
@@ -69,7 +70,7 @@ export default {
         
       </div>
     </div>
-    <div id="coffee"> <!--by Zane Wesley-->
+    <div id="coffee"> 
 
       <div class="steam" id="steam1"> </div>
       <div class="steam" id="steam2"> </div>
@@ -181,7 +182,9 @@ export default {
       position: absolute;
       right: 10px;
       height: fit-content;
-
+      width: fit-content;
+      display: flex;
+      flex-wrap: nowrap;
     }
 
     .navBtn {
@@ -193,7 +196,7 @@ export default {
       padding: 5px;
       margin: 5px;
 
-      height: 50px;
+      min-height: 50px;
       aspect-ratio: 1.76;
       font-size: large;
     }

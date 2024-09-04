@@ -199,6 +199,7 @@ export default {
       min-height: 50px;
       aspect-ratio: 1.76;
       font-size: large;
+      z-index: 1000;
     }
 
     .navBtn:hover{
@@ -518,16 +519,7 @@ export default {
   }
 
   @media only screen and (orientation: portrait) {
-    #viewContainer{
-      display: none;
-
-    }
-
-    #mobile{
-      display: block;
-      color: white;
-    }
-    
+    /*TODO: Contact Panel, Photo on mobile, work on mobile*/
     h1{
       margin-top: 10px;
       margin-bottom: 20px;
@@ -539,11 +531,12 @@ export default {
 
     #wrapper{
       width: 90%;
+      margin-left: 5%;
     }
 
     #header{
       display: flex;
-      flex-direction: column;  
+      flex-direction: column;
     }
 
     #headerNav {
@@ -556,16 +549,15 @@ export default {
     }
 
     .navBtn {
+      margin: 0 10px;
+      font-size: 2rem;
+      width: 220px;
       height: 80px;
-      aspect-ratio: 2.6;
-      margin: 10px;
-      font-size: 3rem;
+      text-wrap: nowrap;
     }
 
     #centerContent {
-      margin-top: 100px;
-      position: absolute;
-      top:40%;
+      margin-top: 50px;
     }
 
     #centerContent p{
@@ -603,7 +595,7 @@ export default {
       left: 0%;
       margin-left: 60px;
       transform: translateX(0);
-      
+
     }
   }
 

@@ -127,7 +127,7 @@ export default {
 
     <div id="imageSlider">
       <div id="imageSliderBtnSelect" style="height: 50px; width: 80%; margin-left: 10%; transform: translateY(-50%); margin-bottom: -25px; display: flex; flex-wrap: nowrap; flex-direction: row" >
-        <button class="navBtn" :style="(categories[index].active) ? 'border-color: green; color: green' : ''" v-for="(btn, index) in categories" style="margin: 0 10px; font-size: larger; border-width: 3px; padding: 5px 10px" @click="categories[index].active = !categories[index].active ">{{btn.name}}</button>
+        <div class="toggle-button" :class="(categories[index].active) ? 'on' : ''" v-for="(btn, index) in categories" @click="categories[index].active = !categories[index].active">{{btn.name}}</div>
       </div>
       <Flicking :options="{ renderOnlyVisible: true, circular: true }" >
         <div v-for="idx in computedList" class="flicking-panel" :key="idx" @click="openImg(idx.name)">
@@ -287,6 +287,64 @@ export default {
   color: rgb(0, 255, 200);
   transform: scale(110%);
 }
+
+
+
+
+
+
+
+
+
+
+
+.toggle-button {
+  width: 120px;
+  height: 40px;
+  background-color: transparent;
+  border: 4px solid white;
+  border-radius: 6px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin: 0 10px;
+  font-size: large;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  transition: border-color 0.3s ease, color 0.3s ease;
+
+  user-select: none;
+}
+
+.toggle-button:before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button.on {
+  border-color: #4CAF50C0 ;
+}
+
+.toggle-button.on:before {
+  background-color: #4CAF50;
+}
+
+
+
+
+
+
+
 
 
 </style>

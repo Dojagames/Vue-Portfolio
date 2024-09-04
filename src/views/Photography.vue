@@ -82,6 +82,12 @@ export default {
     CloseModal(){
       this.activateModal = false;
     },
+    nextSlide(){
+      this.$refs.flicking.next();
+    },
+    prevSlide(){
+      this.$refs.flicking.prev();
+    }
   },
   computed: {
     computedList(){
@@ -118,22 +124,24 @@ export default {
       </div>
     </div>
 
-    <button class="navBtn" style="margin-left: 50%; transform: translateX(-50%)" @click="defaultView = false; window.scrollTo(0,0); ">view all</button>
+    <button class="navBtn" style="margin-left: 50%; transform: translateX(-50%)" @click="defaultView = false; window.scrollTo(0,0); window.document.body.style.overflowY = 'hidden'">view all</button>
   </div>
 
 
 
-  <div v-else>
+  <div v-else style="overflow: hidden">
 
     <div id="imageSlider">
       <div id="imageSliderBtnSelect" style="height: 50px; width: 80%; margin-left: 10%; transform: translateY(-50%); margin-bottom: -25px; display: flex; flex-wrap: nowrap; flex-direction: row" >
         <div class="toggle-button" :class="(categories[index].active) ? 'on' : ''" v-for="(btn, index) in categories" @click="categories[index].active = !categories[index].active">{{btn.name}}</div>
       </div>
-      <Flicking :options="{ renderOnlyVisible: true, circular: true }" >
-        <div v-for="idx in computedList" class="flicking-panel" :key="idx" @click="openImg(idx.name)">
+      <Flicking ref="flicking" :options="{ renderOnlyVisible: true, circular: true }" >
+        <div v-for="idx in computedList" class="flicking-panel" :key="idx" @click="openImg(idx)">
           <img :src="'../../src/assets/photos/' + idx + '.jpg'" style="pointer-events: none" class="flicking-photo" />
         </div>
       </Flicking>
+      <button class="cycle-button" style="left: 30px" @click="prevSlide()">&lt;</button>
+      <button class="cycle-button" style="right: 30px" @click="nextSlide()">&gt;</button>
     </div>
 
 
@@ -343,6 +351,39 @@ export default {
 
 
 
+
+
+
+.cycle-button {
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  border: 2px solid lightgray;
+  border-radius: 50%;
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  z-index: 2000;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cycle-button:hover {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.cycle-button:active {
+  transform: scale(0.95) translateY(-50%);
+}
 
 
 

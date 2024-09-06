@@ -20,6 +20,8 @@ export default {
       categories: [{name: "portrait", active: true},{name: "landscape", active: true}],
 
       list: [],
+
+      currentSlide: 0
     }
   },
   props: {
@@ -87,7 +89,14 @@ export default {
     },
     prevSlide(){
       this.$refs.flicking.prev();
-    }
+    },
+    onSlideChange(e) {
+      this.currentSlide = e.index; // Update current slide index on change
+    },
+    goToSlide(index) {
+      this.currentSlide = index;
+      this.$refs.flicking.moveTo(index); // Move to the clicked dot's slide
+    },
   },
   computed: {
     computedList(){
@@ -135,11 +144,20 @@ export default {
       <div id="imageSliderBtnSelect" style="height: 50px; width: 80%; margin-left: 10%; transform: translateY(-50%); margin-bottom: -25px; display: flex; flex-wrap: nowrap; flex-direction: row" >
         <div class="toggle-button" :class="(categories[index].active) ? 'on' : ''" v-for="(btn, index) in categories" @click="categories[index].active = !categories[index].active">{{btn.name}}</div>
       </div>
-      <Flicking ref="flicking" :options="{ renderOnlyVisible: true, circular: true }" >
+      <Flicking ref="flicking" :options="{ renderOnlyVisible: true, circular: true }" @changed="onSlideChange">
         <div v-for="idx in computedList" class="flicking-panel" :key="idx" @click="openImg(idx)">
           <img :src="'../../src/assets/photos/' + idx + '.jpg'" style="pointer-events: none" class="flicking-photo" />
         </div>
       </Flicking>
+      <div class="slider-indicator">
+        <span
+            v-for="(dot, index) in computedList"
+            :key="index"
+            class="indicator-dot"
+            :class="{ active: index === currentSlide }"
+            @click="goToSlide(index)"
+        ></span>
+      </div>
       <button class="cycle-button" style="left: 30px" @click="prevSlide()">&lt;</button>
       <button class="cycle-button" style="right: 30px" @click="nextSlide()">&gt;</button>
     </div>
@@ -383,6 +401,47 @@ export default {
 
 .cycle-button:active {
   transform: scale(0.95) translateY(-50%);
+}
+
+
+
+
+
+
+
+
+.slider-indicator {
+  position: fixed;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.indicator-dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: gray;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.indicator-dot:hover{
+  margin: 0 10px;
+  width: 12px;
+  height: 12px;
+}
+
+.indicator-dot.active {
+  width: 12px;
+  height: 12px;
+  background-color: #4CAF50;
+  margin: 0 10px;
 }
 
 

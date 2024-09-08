@@ -97,6 +97,15 @@ export default {
       this.currentSlide = index;
       this.$refs.flicking.moveTo(index); // Move to the clicked dot's slide
     },
+    updateSlide(){
+      this.$nextTick(() => {
+        this.$refs.flicking.resize(); // Ensures the list update is reflected
+      });
+    },
+    windowChange(){
+      window.scrollTo(0,0);
+      //window.document.body.style.overflowY = 'hidden'
+    }
   },
   computed: {
     computedList(){
@@ -110,6 +119,9 @@ export default {
           })
         }
       })
+      this.$nextTick(() => {
+        this.$refs.flicking.resize(); // Ensures the list update is reflected
+      });
       return _tempList;
     }
   }
@@ -133,7 +145,7 @@ export default {
       </div>
     </div>
 
-    <button class="navBtn" style="margin-left: 50%; transform: translateX(-50%)" @click="defaultView = false; window.scrollTo(0,0); window.document.body.style.overflowY = 'hidden'">view all</button>
+    <button class="navBtn" style="margin-left: 50%; transform: translateX(-50%)" @click="defaultView = false; windowChange();">view all</button>
   </div>
 
 
@@ -142,7 +154,7 @@ export default {
 
     <div id="imageSlider">
       <div id="imageSliderBtnSelect" style="height: 50px; width: 80%; margin-left: 10%; transform: translateY(-50%); margin-bottom: -25px; display: flex; flex-wrap: nowrap; flex-direction: row" >
-        <div class="toggle-button" :class="(categories[index].active) ? 'on' : ''" v-for="(btn, index) in categories" @click="categories[index].active = !categories[index].active">{{btn.name}}</div>
+        <div class="toggle-button" :class="(categories[index].active) ? 'on' : ''" v-for="(btn, index) in categories" @click="categories[index].active = !categories[index].active; updateSlide();">{{btn.name}}</div>
       </div>
       <Flicking ref="flicking" :options="{ renderOnlyVisible: true, circular: true }" @changed="onSlideChange">
         <div v-for="idx in computedList" class="flicking-panel" :key="idx" @click="openImg(idx)">
@@ -279,6 +291,8 @@ export default {
   right: 10px;
   font-size: 28px;
   font-weight: bold;
+  z-index: 3000;
+  cursor: pointer;
 }
 
 .close:hover,
@@ -386,7 +400,7 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: border-color 0.3s ease, color 0.3s ease;
+  transition: border-color 0.05s ease, color 0.05s ease;
   z-index: 2000;
 
   position: absolute;
@@ -412,7 +426,7 @@ export default {
 
 .slider-indicator {
   position: fixed;
-  bottom: -15px;
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2000;
@@ -432,7 +446,7 @@ export default {
 }
 
 .indicator-dot:hover{
-  margin: 0 10px;
+  margin: 0 7px;
   width: 12px;
   height: 12px;
 }
@@ -441,7 +455,7 @@ export default {
   width: 12px;
   height: 12px;
   background-color: #4CAF50;
-  margin: 0 10px;
+  margin: 0 7px;
 }
 
 

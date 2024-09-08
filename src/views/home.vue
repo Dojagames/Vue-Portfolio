@@ -200,6 +200,7 @@ export default {
       aspect-ratio: 1.76;
       font-size: large;
       z-index: 1000;
+      transition: all .05s;
     }
 
     .navBtn:hover{
@@ -301,8 +302,8 @@ export default {
     height: 100%;
     background: rgb(20,20,20);
     border-radius: 12px;
-    -webkit-box-shadow: 0px 0px 12px 12px rgba(255, 255, 255, 0.199); 
-    box-shadow: 0px 0px 12px 12px rgba(255, 255, 255, 0.199);
+    -webkit-box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.1);
   }
 
 

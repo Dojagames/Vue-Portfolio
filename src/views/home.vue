@@ -46,10 +46,10 @@ export default {
 
 <template>
 
-  <div id="mobile" style="width: 80%; margin-left: 10%;">
+  <!-- <div id="mobile" style="width: 80%; margin-left: 10%;">
     <h1 style="color: white;">Mobile view coming soon...</h1>
      <div style=" cursor: pointer;" @click="ChangeWindow('about')"><h2 style="text-decoration: underline; font-size: 4rem; text-align: center;">check out my about me page:</h2></div>
-  </div>
+  </div> -->
   <div id="viewContainer">
     <!-- <div id="gradient"></div> -->
     <div id="wrapper">
@@ -254,13 +254,10 @@ export default {
     z-index: 2;
     background-color: transparent;
     margin: auto; /* 15% from the top and centered */
-    padding: 20px;
+    padding: 0;
     border-radius: 6px;
-    min-width: 380px;
-    width: 15%; /* Could be more or less, depending on screen size */
-    max-width: 432px;
-    height: 40%;
-    min-height: 510px;
+    width: fit-content;
+    height: fit-content;
   }
 
   /* The Close Button */
@@ -294,23 +291,23 @@ export default {
 
 
   #contactCard{
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
+    width: fit-content;
+    height: fit-content;
     background: rgb(20,20,20);
     border-radius: 12px;
     -webkit-box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.1);
     box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.1);
+    padding: 1rem 1.5rem;
   }
 
 
   #contactCardDivWrapper{
     display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    margin-bottom: 38px;
 
   }
   .contactCardDiv{
@@ -336,11 +333,11 @@ export default {
 
   .contactCardDiv img{
     margin-right: 10px;
+    width: 20px;
   }
 
 
   #contactCardLogoWrapper{
-    margin-top: 38px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -354,7 +351,7 @@ export default {
   transform: translateX(-50%);
   outline: 1px solid #19F6E8;
   display: inline-block;
-  padding: 15px 35px;
+  padding: 1rem 3rem;
 
   text-transform: uppercase;
   font-size: 2em;
@@ -362,7 +359,7 @@ export default {
   font-weight: normal;
   line-height: 32px;
   letter-spacing: 4px;
-
+  width: fit-content;
 }
 
 
@@ -521,11 +518,15 @@ export default {
 
   @media only screen and (orientation: portrait) {
     /*TODO: Contact Panel, Photo on mobile, work on mobile*/
+    html, body {
+      width: 100vw;
+      height: 100vh;
+    }
     h1{
       margin-top: 10px;
       margin-bottom: 20px;
-      font-size: 6rem;
-      width: 100%;
+      font-size: 5rem;
+      width: 100vw;
       text-align: center;
       position: relative;
     }
@@ -546,14 +547,14 @@ export default {
       justify-content: space-around;
       display: flex;
       left:0;
-      width: 76%;
+      width: 100%;
     }
 
     .navBtn {
       margin: 0 10px;
       font-size: 2rem;
-      width: 220px;
-      height: 80px;
+      width: 20vw;
+      height: fit-content;
       text-wrap: nowrap;
     }
 
@@ -568,36 +569,8 @@ export default {
       line-height:normal;
       font-weight: bold;
     }
-
-
-    .modal-content {
-      min-width: none;
-      max-width: none;
-      width: 500px; /* Could be more or less, depending on screen size */
-
-      height: 30%;
-      min-height: none;
-      max-height: none;
-    }
-
-    #contactCard{
-      position: relative;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      height: 90%;
-      background: rgb(20,20,20);
-      border-radius: 4px;
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-    }
-
-    .contactHeader {
-      left: 0%;
-      margin-left: 60px;
-      transform: translateX(0);
-
-    }
   }
-
+  body{
+    overflow-y: hidden;
+  }
 </style>

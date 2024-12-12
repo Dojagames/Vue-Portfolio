@@ -27,6 +27,9 @@ export default {
             ttt2Imgs: ["/screenshots/ttt2-1.png", "/screenshots/ttt2-2.png", "/screenshots/ttt2-3.png"],
             ttt2Selected: 0,
 
+            waschmaschienenQttImgs: ["/screenshots/wqq-1.png", "/screenshots/wqq-2.png", "/screenshots/wqq-3.png"],
+            waschmaschienenQttSelected: 0,
+
             currentModal: null,
             activateModal: false,
         }
@@ -79,24 +82,16 @@ export default {
             <h1>currently working on:</h1>
 
             <div class="projectwrapper">
-                <div class="project">
-                    <a href="https://github.com/Dojagames/Vue-PwManager" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">P-Vault - VueJs Password Manager (2023)</h2></a>
-                    <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
-                        <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('pVault', 'l')">&lt;</h2>
-                        <a href="https://github.com/Dojagames/Vue-PwManager" target="_blank" class="imgBox"><img v-bind:src="pVaultImgs[pVaultSelected]"></a>
-                        <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('pVault', 'r')">&gt;</h2>
-                    </div>
-                    <h3>todos: electron app, browserplugin, redesign / fine tuning</h3>
-                </div>
+
 
                 <div class="project">
-                    <a href="https://github.com/Dojagames/CryptChat-final" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">CryptChat - Socket.io / VueJs Chat App (2023)</h2></a>
+                    <a href="https://github.com/Dojagames/CryptChat-final" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">CryptChat - socket.io / node.js / mongoDB / vue.js Chat App (2024)</h2></a>
                     <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
                         <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('cc', 'l')">&lt;</h2>
                         <a href="https://github.com/Dojagames/CryptChat-final" target="_blank" class="imgBox"><img v-bind:src="ccImgs[ccSelected]"></a>
                         <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('cc', 'r')">&gt;</h2>
                     </div>
-                    <h3>todo: redefine UI and mobile deployment</h3>
+                    <h3>todo: redefine UI, storage system on client, settings </h3>
                 </div>
             </div>
         </div>
@@ -108,7 +103,7 @@ export default {
 
             <div class="projectwrapper">
                 <div class="project">
-                    <a href="https://github.com/Dojagames/Vue-Spotify" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Spotify Playlist Editor - Vue Js/Spotify Api (2023)</h2></a>
+                    <a href="https://github.com/Dojagames/Vue-Spotify" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Spotify Playlist Editor - vue.js / Spotify Api (2023)</h2></a>
                         <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
                             <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('spotify', 'l')">&lt;</h2>
                             <a href="https://github.com/Dojagames/Vue-Spotify" target="_blank" class="imgBox"><img v-bind:src="spotifyImgs[spotifySelected]" class="cyclebtn"></a>
@@ -118,9 +113,19 @@ export default {
                 </div>
             </div>
 
+          <div class="project">
+            <a href="https://github.com/Dojagames/Vue-PwManager" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">P-Vault - vue.js Password Manager (2023)</h2></a>
+            <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
+              <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('pVault', 'l')">&lt;</h2>
+              <a href="https://github.com/Dojagames/Vue-PwManager" target="_blank" class="imgBox"><img v-bind:src="pVaultImgs[pVaultSelected]"></a>
+              <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('pVault', 'r')">&gt;</h2>
+            </div>
+            <h3>a simple encrypted password manager</h3>
+          </div>
+
             <div class="projectwrapper">
                 <div class="project">
-                    <a href="https://github.com/Dojagames/ttt2" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Ultimate tic tac toe - Vue Js/Socket.io/node.js (2023)</h2></a>
+                    <a href="https://github.com/Dojagames/ttt2" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Ultimate tic tac toe - vue.js/socket.io/node.js (2023)</h2></a>
                         <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
                             <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('ttt2', 'l')">&lt;</h2>
                             <a href="https://github.com/Dojagames/ttt2" target="_blank" class="imgBox"><img v-bind:src="ttt2Imgs[ttt2Selected]" class="cyclebtn"></a>
@@ -143,6 +148,18 @@ export default {
             </div>
 
             <div class="projectwrapper">
+              <div class="project">
+                <a href="https://github.com/Dojagames/waschmaschienenQuartett" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">WaschmaschienenQuartett - vue.js / socket.io / node.js (2023)</h2></a>
+                <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
+                  <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('waschmaschienenQtt', 'l')">&lt;</h2>
+                  <a href="https://github.com/Dojagames/Desklamp" target="_blank" class="imgBox"><img v-bind:src="waschmaschienenQttImgs[waschmaschienenQttSelected]" class="cyclebtn"></a>
+                  <h2 style="margin-left: 20px;" class="cyclebtn" @click="changeImg('waschmaschienenQtt', 'r')">&gt;</h2>
+                </div>
+                <h3>a card game with washing machines</h3>
+              </div>
+            </div>
+
+            <div class="projectwrapper">
                 <div class="project">
                     <a href="https://github.com/Dojagames/Armin-Space-Adventure" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">Armin Space Adventure - Unity Topdown Shooter (2021)</h2></a>
                         <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
@@ -156,7 +173,7 @@ export default {
 
             <div class="projectwrapper">
                 <div class="project">
-                    <a href="https://github.com/Dojagames/cryptchat-og" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">CrytpChat v1.0 - Vanilla Js / Socket.io Chat app (2021)</h2></a>
+                    <a href="https://github.com/Dojagames/cryptchat-og" target="_blank" style="color: white; text-decoration: none;"><h2 class="linkText">CrytpChat v1.0 - vanilla js / socket.io Chat app (2021)</h2></a>
                         <div class="imgcycler" style="display: flex; position: relative; left: 50%; transform: translateX(-50%); width: fit-content; align-items: center;">
                             <h2 style="margin-right: 20px;" class="cyclebtn" @click="changeImg('cc2', 'l')">&lt;</h2>
                             <a href="https://github.com/Dojagames/cryptchat-og" target="_blank" class="imgBox"><img v-bind:src="cc2Imgs[cc2Selected]"></a>
@@ -270,8 +287,8 @@ export default {
     }
 
     .project img{
-        height: 405px;
-        max-width: 1000px;
+        height: 40vh;
+        max-width:40vw;
     }
 
 

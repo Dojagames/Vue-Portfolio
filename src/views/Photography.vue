@@ -132,7 +132,7 @@ export default {
 
 
 
-  <img  @click="GoHome()" id="home" src="../../src/assets/pngs/back.png" style="position: fixed; left: 40px; top: 30px; width: 48px; cursor: pointer; z-index: 1000" class="clickable">
+  <img  @click="GoHome()" id="home" src="../../src/assets/pngs/back.png" style="position: fixed; left: 40px; top: 30px; width: 48px; cursor: pointer; z-index: 1000; background-color: #00000040; border-radius: 50%; padding: .5rem" class="clickable">
   <div v-if="defaultView">
     <div id="introImgs">
       <div id="introImgsRow1">
@@ -170,8 +170,8 @@ export default {
             @click="goToSlide(index)"
         ></span>
       </div>
-      <button class="cycle-button" style="left: 30px" @click="prevSlide()">&lt;</button>
-      <button class="cycle-button" style="right: 30px" @click="nextSlide()">&gt;</button>
+      <button class="cycle-button unmarkable" style="left: 30px" @click="prevSlide()">&lt;</button>
+      <button class="cycle-button unmarkable" style="right: 30px" @click="nextSlide()">&gt;</button>
     </div>
 
 
@@ -261,35 +261,38 @@ export default {
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: hidden; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
-
 .modal-content {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust to truly center */
   width: 90%;
-  margin-left: 5%;
-  height: 98%;
-  margin-top: 1%;
+  height: 90%; /* Adjusted to allow more space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
+/* Image inside the modal */
 .modal-content img {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 97.5%;
-  object-fit: contain;
+  max-width: 100%; /* Ensures the image doesn't exceed the width of its container */
+  max-height: 100%; /* Ensures the image doesn't exceed the height of its container */
+  object-fit: contain; /* Ensures the whole image is visible, scaled to fit */
   border: 5px solid white;
 }
+
 
 /* The Close Button */
 .close {
   color: #aaa;
   position: absolute;
   right: 10px;
-  font-size: 28px;
+  top: 10px;
+  font-size: 3rem;
   font-weight: bold;
   z-index: 3000;
   cursor: pointer;
@@ -419,7 +422,11 @@ export default {
 
 
 
-
+button:active, button:focus {
+  outline: none;  /* Removes the outline (blue border) */
+  background-color: transparent;  /* Removes the background color change */
+  box-shadow: none;  /* Removes any shadow effect */
+}
 
 
 

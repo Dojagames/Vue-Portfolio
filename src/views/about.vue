@@ -713,6 +713,7 @@ export default {
     .tooltip h4 {
       margin: 0;
       font-size: 1.2rem;
+      text-align: center;
     }
 
     .tooltip p {

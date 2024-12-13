@@ -528,8 +528,8 @@ export default {
 @media only screen and (orientation: portrait){
     .project img{
         height: auto;
-        max-height: 405px;
-        max-width: 50%;
+
+        width: 60vw;
     }
 
     .imgBox {

@@ -12,8 +12,9 @@ export default {
       timelineStartingYear: 2003,
       events: {
         academic: [
-          { start: "09/2003", end: "06/2007", header: "High School", text: "Graduated with honors." },
-          { start: "09/2008", end: "06/2012", header: "University", text: "BSc in Computer Science." }
+          { start: "07/2009", end: "06/2014", header: "Grundschule", text: "Sophienschule Buttstädt Staatliche Grundschule"},
+          { start: "07/2014", end: "06/2021", header: "Gymnasium", text: "Prof. Fritz. Hofmann Gymnasiums Kölleda"},
+          { start: "10/2021", end: "02/2022", header: "University", text: "BSc in Computer Science. <br> in tu ilmenau <br> (abgebrochen)" }
         ],
         projects: [
           { start: "01/2019", end: "12/2020", header: "Project A", text: "Developed a web application." },
@@ -102,6 +103,34 @@ export default {
       const lineWidthPercentage = (durationMonths / totalTimelineMonths) * 100;
 
       return `${((this.timelineBarWidth * lineWidthPercentage) / 100) + offset }px`;
+    },
+
+
+    // New function to calculate and adjust the left position of the ending date
+    calculateEndingDateLeft(startDate, endDate) {
+      const [startMonth, startYear] = startDate.split("/").map(Number);
+      const [endMonth, endYear] = endDate === "Present"
+          ? [new Date().getMonth() + 1, new Date().getFullYear()]
+          : endDate.split("/").map(Number);
+
+      const totalStartMonths = (startYear - this.timelineStartingYear) * 12 + startMonth;
+      const totalEndMonths = (endYear - this.timelineStartingYear) * 12 + endMonth;
+      const durationMonths = totalEndMonths - totalStartMonths;
+
+      const totalTimelineMonths = (new Date().getFullYear() - this.timelineStartingYear + 1) * 12;
+      const lineWidthPercentage = (durationMonths / totalTimelineMonths) * 100;
+
+      return `${((this.timelineBarWidth * lineWidthPercentage) / 100) }px`;
+    },
+
+    calculateLeftOffset(){
+      this.$nextTick(() => {
+        let startingElement = document.getElementsByClassName("startingDateEvent")[0];
+        let endingElement = document.getElementsByClassName("endingDateEvent")[0];
+        if(startingElement.getBoundingClientRect().left + startingElement.getBoundingClientRect().width > endingElement.getBoundingClientRect().left) {
+          endingElement.style.left = startingElement.getBoundingClientRect().width + 10 + "px";
+        }
+      });
     },
 
     // Show the tooltip for an event
@@ -263,7 +292,7 @@ export default {
               <div id="timelineEventWrapper">
                 <div v-for="(event, index) in activeCategoryEvents" :key="index" class="timelineEvent"
                      :style="{ left: calculatePosition(event.start) }"
-                     @mouseover="showTooltip(index); setActiveEventIndex(index)"
+                     @mouseover="showTooltip(index); setActiveEventIndex(index); calculateLeftOffset()"
                      @mouseleave="hideTooltip(index)" >
 
                   <p class="eventName" v-if="activeEventIndex === null">{{event.header}}</p>
@@ -271,13 +300,14 @@ export default {
 
 
                   <!-- Set the width of the event line based on the total timeline width -->
-                  <div class="startingDateEvent eventDate" v-if="isTooltipVisible(index)">{{event.start}}</div>
+                  <div class="startingDateEvent eventDate" v-if="isTooltipVisible(index)" ref="startingDateEvent">{{event.start}}</div>
                   <div v-if="isTooltipVisible(index)" class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
-                  <div class="endingDateEvent eventDate" :style="{ left: calculateLineWidth(event.start, event.end, -5) }" v-if="isTooltipVisible(index)">{{event.end}}</div>
+                  <div class="endingDateEvent eventDate" :style="{ left: calculateEndingDateLeft(event.start, event.end) }" ref="endingDateEvent" v-if="isTooltipVisible(index)">{{event.end}}</div>
                   <!-- Tooltip -->
                   <div v-if="isTooltipVisible(index)" class="tooltip">
                     <h4>{{ event.header }}</h4>
-                    <p>{{ event.text }}</p>
+                    <p v-html="event.text"></p>
+                    <a v-if="event.link && event.linkText" :href="event.link">{{event.linkText}}</a>
                   </div>
                 </div>
               </div>

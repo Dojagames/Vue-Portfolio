@@ -17,11 +17,33 @@ export default {
           { start: "10/2021", end: "02/2022", header: "University", text: "BSc in Computer Science. <br> in tu ilmenau <br> (abgebrochen)" }
         ],
         projects: [
-          { start: "01/2019", end: "12/2020", header: "Project A", text: "Developed a web application." },
-          { start: "02/2021", end: "06/2022", header: "Project B", text: "Implemented a mobile app." }
+          { start: "12/2019", end: "", header: "VertretungsplanApp", text: "an app for my school to look up the representation plan", link: null, linkText: null },
+          { start: "01/2020", end: "05/2021", header: "James smart assistant", text: "a complete smarthome system with a voice assistant, multiple selfmade smarthome devices and the feature to integrate commercial and selfmade devices", link: null, linkText: null },
+          { start: "03/2020", end: "04/2020", header: "Desklamp", text: "a diy desklamp with alexa integration etc", link: "https://github.com/Dojagames/Desklamp", linkText: "Github" },
+          { start: "12/2020", end: "", header: "Rollcon", text: "a smart roller shutter device / interface", link: "https://github.com/Dojagames/Rollcon", linkText: "Github" },
+          { start: "01/2021", end: "03/2021", header: "Armin Space Adventure", text: "a topdown shooter made in unity", link: "https://github.com/Dojagames/Armin-Space-Adventure", linkText: "Github" },
+          { start: "01/2022", end: "03/2022", header: "Abiplaner", text: "a planing tool for highschool", link: "https://github.com/Dojagames/Abiplaner", linkText: "Github" },
+          { start: "04/2022", end: "07/2022", header: "PasswordManager", text: "an encrypted password manager, written in C#", link: "https://github.com/Dojagames/PW-Manager", linkText: "Github" },
+          { start: "08/2022", end: "", header: "LFS-Companion", text: "a simple helper app for my vocational school", link: "https://github.com/Dojagames/lfsCompanion", linkText: "Github" },
+          { start: "01/2023", end: "", header: "blackJack and sinking ships", text: "2 games made in delphi just for fun", link: "https://github.com/Dojagames/DelphiGames", linkText: "Github" },
+          { start: "03/2023", end: "06/2023", header: "P-Vault", text: "a more sophisticated password manager written in vue.js", link: "https://github.com/Dojagames/P-Vault", linkText: "Github" },
+          { start: "05/2023", end: "", header: "Poker", text: "a poker algorithm for evaluating poker hands", link: "https://github.com/Dojagames/poker2/blob/master/js/game.js", linkText: "Github" },
+          { start: "06/2023", end: "", header: "Landingpage", text: "my landing page", link: "https://github.com/Dojagames/jonx.dev", linkText: "Github" },
+          { start: "07/2023", end: "", header: "TicTacToe", text: "tic tac toe and ultimate tic tac toe as a multiplayer games with vue and node.js/socket.io", link: "https://github.com/Dojagames/ttt2", linkText: "Github" },
+          { start: "08/2023", end: "", header: "Portfolio", text: "this portfolio page in the version 1.0", link: "https://github.com/Dojagames/Vue-Portfolio", linkText: "Github" },
+          { start: "09/2023", end: "11/2023", header: "Spotify playlist editor", text: "using the spotify api", link: "https://github.com/Dojagames/Vue-Spotify", linkText: "Github" },
+          { start: "10/2023", end: "11/2023", header: "WaschmachinenQuartett", text: "a card game with washing machines", link: "https://github.com/Dojagames/waschmaschienenQuartett", linkText: "Github" },
+          { start: "12/2023", end: "01/2024", header: "internal tools", text: "internal tool for stoneman", link: null, linkText: null },
+          { start: "02/2024", end: "07/2024", header: "Radstrecken Planungstool", text: "a cycling route planner for stoneman", link: null, linkText: null },
+          { start: "04/2024", end: "", header: "elevation mapper", text: "a tool which uses tiffs to evaluate the height at coordinates", link: null, linkText: null },
+          { start: "06/2024", end: "", header: "Arbeitszeit tool", text: "a tool to track you working hours", link: null, linkText: null },
+          { start: "07/2024", end: "Present", header: "TTT2", text: "a first person shooter inspired by trouble in terrorist town", link: null, linkText: null },
+          { start: "08/2024", end: "Present", header: "CC2", text: "cryptchat v2 - an end to end encrypted chat app with a focus on privacy", link: "https://github.com/Dojagames/CryptChat-final", linkText: "Github" },
+          { start: "09/2024", end: "", header: "photo gallery", text: "a showcase website for my photos", link: null, linkText: null },
+          { start: "11/2024", end: "", header: "soundcloud sessions", text: "listening sessions for soundcloud like spotify jams (beta)", link: null, linkText: null },
         ],
         work: [
-          { start: "03/2022", end: "Present", header: "Software Developer", text: "Working on cloud services." }
+          { start: "12/2023", end: "Present", header: "Frontend Developer", text: "@stoneman / absolutGPS" }
         ]
       },
 
@@ -272,6 +294,7 @@ export default {
           </div>
 
           <div id="timelineJourney" v-else>
+            <h1>Developer journey</h1>
             <div id="timelineButtonWrapper">
               <button :class="{ activeBtnClass: timelineActiveElements['academic'] }" @click="setTimelineActiveElement('academic')">
                 academic
@@ -295,19 +318,19 @@ export default {
                      @mouseover="showTooltip(index); setActiveEventIndex(index); calculateLeftOffset()"
                      @mouseleave="hideTooltip(index)" >
 
-                  <p class="eventName" v-if="activeEventIndex === null">{{event.header}}</p>
+                  <p class="eventName" v-if="activeEventIndex === null && timelineActiveElements['projects'] === false">{{event.header}}</p>
                   <div class="eventDot" v-if="activeEventIndex === null || activeEventIndex === index" ></div>
 
 
                   <!-- Set the width of the event line based on the total timeline width -->
                   <div class="startingDateEvent eventDate" v-if="isTooltipVisible(index)" ref="startingDateEvent">{{event.start}}</div>
-                  <div v-if="isTooltipVisible(index)" class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
-                  <div class="endingDateEvent eventDate" :style="{ left: calculateEndingDateLeft(event.start, event.end) }" ref="endingDateEvent" v-if="isTooltipVisible(index)">{{event.end}}</div>
+                  <div v-if="isTooltipVisible(index) && event.end" class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
+                  <div class="endingDateEvent eventDate" :style="{ left: calculateEndingDateLeft(event.start, event.end) }" ref="endingDateEvent" v-if="isTooltipVisible(index) && event.end">{{event.end}}</div>
                   <!-- Tooltip -->
                   <div v-if="isTooltipVisible(index)" class="tooltip">
                     <h4>{{ event.header }}</h4>
                     <p v-html="event.text"></p>
-                    <a v-if="event.link && event.linkText" :href="event.link">{{event.linkText}}</a>
+                    <a v-if="event.link && event.linkText" :href="event.link" target="_blank">{{event.linkText}}</a>
                   </div>
                 </div>
               </div>
@@ -511,8 +534,8 @@ export default {
 
 
 
-    #timelineJourney{
-      padding: 2rem 0;
+    #timelineJourney h1{
+      margin-bottom: 2rem;
     }
 
     #timelineBar {
@@ -567,7 +590,7 @@ export default {
     }
 
     #timelineButtonWrapper{
-      margin: 1rem;
+      margin: 2rem;
     }
 
     #timelineButtonWrapper button{
@@ -664,21 +687,24 @@ export default {
       top: 0; /* Position the tooltip below the event */
       left: 50%;
       transform: translateX(-50%) translateY(-100%);
-      background-color: white;
+      background-color: #FFFFFFC0;
+      backdrop-filter: blur(4px);
       border: 1px solid #ccc;
       border-radius: .5rem;
       padding: .5rem;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      text-align: justify;
     }
 
     .tooltip h4 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
 
     .tooltip p {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: 1rem;
+      min-width: 10rem;
     }
 
 

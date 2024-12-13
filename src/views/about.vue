@@ -347,7 +347,21 @@ export default {
               I am also writing a book in the field of political theory, which has further honed my analytical skills and understanding of complex systems. The process of articulating and structuring my thoughts in writing has improved my ability to approach software development projects with a clear, methodical mindset.<br>
               Furthermore, my interest in sociology and psychology allows me to explore the dynamics of human behavior and societal systems, which aids in designing user-centric digital solutions. These hobbies and intellectual pursuits contribute to my personal growth, providing opportunities for self-expression, learning, and a deeper understanding of the world. They help me strike a balance between physical, creative, and intellectual pursuits, all of which enrich my skills as a software engineer and my ability to think critically and creatively.</p>
     
-        </div>
+        </div><br><br>
+
+      <div class="aboutContainer rightBound">
+        <h1>tools I worked with</h1>
+        <p class="aboutText">
+          <b>languages:</b><br>
+          java, c++, c#, js, Flutter<br><br>
+
+          <b>frameworks:</b><br>
+          Android Studio, Unity, Arduino(EEPROM, Wifi, Webserver, FastLED, etc.), UWP<br><br>
+
+          <b>web:</b><br>
+          js, html, css, scss, mongoDB, mongoose, node.js, socket.io, vue, pinia, vite, indexedDB, OAuth, bcrypt, jwt, etc.
+        </p>
+      </div>
 
     </div>
 </template>

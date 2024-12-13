@@ -544,18 +544,19 @@ export default {
     #headerNav {
       position: relative;
       height: fit-content;
-      justify-content: space-around;
       display: flex;
-      left:0;
+      flex-wrap: wrap; /* Allows items to wrap to the next line */
+      justify-content: center; /* Center-align the items horizontally */
       width: 100%;
     }
 
     .navBtn {
-      margin: 0 10px;
+      margin: 10px; /* Add some spacing between buttons */
       font-size: 2rem;
-      width: 20vw;
-      height: fit-content;
+      width: 45%; /* Each button takes about half the container width */
+      height: 5rem;
       text-wrap: nowrap;
+      text-align: center;
     }
 
     #centerContent {

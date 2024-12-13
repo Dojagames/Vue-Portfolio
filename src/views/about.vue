@@ -25,6 +25,8 @@ export default {
       },
 
       tooltipsVisible: reactive([]),
+      timelineBarWidth: 0,
+      activeEventIndex: null,
     };
   },
   computed: {
@@ -65,7 +67,17 @@ export default {
       }
     },
 
-    // Calculate the position of a dot on the timeline based on the start date
+    // Update the timeline bar width
+    updateTimelineBarWidth() {
+      if(this.viewText){
+        return
+      }
+      this.$nextTick(() => {
+        this.timelineBarWidth = this.$refs.timelineBar.offsetWidth;
+      });
+    },
+
+    // Calculate event position relative to the timelineBar
     calculatePosition(startDate) {
       const [startMonth, startYear] = startDate.split("/").map(Number);
       const totalMonths = (startYear - this.timelineStartingYear) * 12 + startMonth;
@@ -75,19 +87,21 @@ export default {
       return `${positionPercentage}%`;
     },
 
-    // Calculate the width of the line based on the start and end dates
-    calculateLineWidth(startDate, endDate) {
+    // Calculate the event line width relative to the timelineBar width
+    calculateLineWidth(startDate, endDate, offset = 0) {
       const [startMonth, startYear] = startDate.split("/").map(Number);
       const [endMonth, endYear] = endDate === "Present"
           ? [new Date().getMonth() + 1, new Date().getFullYear()]
           : endDate.split("/").map(Number);
+
       const totalStartMonths = (startYear - this.timelineStartingYear) * 12 + startMonth;
       const totalEndMonths = (endYear - this.timelineStartingYear) * 12 + endMonth;
       const durationMonths = totalEndMonths - totalStartMonths;
-      const totalTimelineMonths =
-          (new Date().getFullYear() - this.timelineStartingYear + 1) * 12;
+
+      const totalTimelineMonths = (new Date().getFullYear() - this.timelineStartingYear + 1) * 12;
       const lineWidthPercentage = (durationMonths / totalTimelineMonths) * 100;
-      return `${lineWidthPercentage}%`;
+
+      return `${((this.timelineBarWidth * lineWidthPercentage) / 100) + offset }px`;
     },
 
     // Show the tooltip for an event
@@ -98,14 +112,37 @@ export default {
     // Hide the tooltip for an event
     hideTooltip(index) {
       this.tooltipsVisible[index] = false;
+      this.resetActiveEventIndex();
     },
 
     // Check if the tooltip for an event is visible
     isTooltipVisible(index) {
-      console.log(index , this.tooltipsVisible[index])
       return this.tooltipsVisible[index];
+    },
+
+    setActiveEventIndex(index) {
+      this.activeEventIndex = index;
+    },
+    // Reset the hovered event index when mouse leaves
+    resetActiveEventIndex() {
+      this.activeEventIndex = null;
     }
-  }
+
+
+  },
+  mounted() {
+    // Initially calculate the width of the timeline bar
+    this.$nextTick(() => {
+      this.updateTimelineBarWidth();
+    });
+
+    // Add resize listener to update the width on window resize
+    window.addEventListener('resize', this.updateTimelineBarWidth);
+  },
+  beforeDestroy() {
+    // Clean up the resize listener when the component is destroyed
+    window.removeEventListener('resize', this.updateTimelineBarWidth);
+  },
 };
 </script>
 
@@ -192,7 +229,7 @@ export default {
         <div class="aboutContainer rightBound">
           <span class="buttonWrapper">
             <button :class="{activeBtnClass: viewText}" @click="viewText = true">text</button>
-            <button :class="{activeBtnClass: !viewText}" @click="viewText = false">timeline</button>
+            <button :class="{activeBtnClass: !viewText}" @click="viewText = false; updateTimelineBarWidth()">timeline</button>
           </span>
 
           <div id="textJourney" v-if="viewText">
@@ -217,7 +254,7 @@ export default {
                 work
               </button>
             </div>
-            <div id="timelineBar">
+            <div id="timelineBar" ref="timelineBar">
               <div class="timelineStampWrapper">
                 <div class="timelineStamp" v-for="year in years" :key="year">
                   <p>{{ year }}</p>
@@ -226,14 +263,21 @@ export default {
               <div id="timelineEventWrapper">
                 <div v-for="(event, index) in activeCategoryEvents" :key="index" class="timelineEvent"
                      :style="{ left: calculatePosition(event.start) }"
-                     @mouseover="showTooltip(index)"
-                     @mouseleave="hideTooltip(index)">
-                  <div class="eventDot"></div>
-                  <div class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
+                     @mouseover="showTooltip(index); setActiveEventIndex(index)"
+                     @mouseleave="hideTooltip(index)" >
+
+                  <p class="eventName" v-if="activeEventIndex === null">{{event.header}}</p>
+                  <div class="eventDot" v-if="activeEventIndex === null || activeEventIndex === index" ></div>
+
+
+                  <!-- Set the width of the event line based on the total timeline width -->
+                  <div class="startingDateEvent eventDate" v-if="isTooltipVisible(index)">{{event.start}}</div>
+                  <div v-if="isTooltipVisible(index)" class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
+                  <div class="endingDateEvent eventDate" :style="{ left: calculateLineWidth(event.start, event.end, -5) }" v-if="isTooltipVisible(index)">{{event.end}}</div>
+                  <!-- Tooltip -->
                   <div v-if="isTooltipVisible(index)" class="tooltip">
                     <h4>{{ event.header }}</h4>
                     <p>{{ event.text }}</p>
-                    <small>{{ event.start }} - {{ event.end }}</small>
                   </div>
                 </div>
               </div>
@@ -444,8 +488,10 @@ export default {
     #timelineBar {
       width: 100%;
       height: 2rem;
-      background-color: #00ffc8;
+      background-color: #FFFFFF40;
+      backdrop-filter: blur(6px);
       border-radius: 4rem;
+      border: 2px solid #00000060;
       position: relative; /* For positioning the vertical lines */
     }
 
@@ -515,36 +561,84 @@ export default {
     }
 
 
-    .timelineEvent {
+    #timelineEventWrapper{
       position: absolute;
       top: 0;
+      width: 100%;
       height: 100%;
+    }
+
+    .timelineEvent {
+      position: absolute; /* Absolute position to align events within the bar */
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .eventName{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: fit-content;
+      white-space: nowrap;
+      transform: translateY(calc(-100% - 1rem)) translateX(-50%);
     }
 
     .eventDot {
       width: 10px;
       height: 10px;
-      border-radius: 50%;
       background-color: black;
-      position: absolute;
+      border-radius: 50%;
+      position: relative; /* Center the dot on the event */
     }
 
     .eventLine {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      height: 2px;
+      left: 0;
+      height: .3rem; /* Set the height of the event line */
       background-color: black;
+    }
+
+    .eventDate{
+      position: absolute;
+      transform: translateY(80%) translateX(-50%);
+      bottom: 0;
+
+      background: #FFFFFFA0;
+      backdrop-filter: blur(6px);
+      border-radius: 0.4rem;
+      border: 1px solid #00000020;
+      padding: .1rem 0.2rem;
+      font-weight: bold;
+      letter-spacing: 1.1px;
+    }
+
+
+    .eventLine::after{
+      content: '';
+      position: absolute;
+      right: 0;
+      top:50%;
+      width: 10px;
+      height: 10px;
+      background-color: black;
+      border-radius: 50%;
+      transform: translateY(-50%);
     }
 
     .tooltip {
       position: absolute;
-      top: 0;
-      transform: translateY(-100%) translateX(-50%);
+      top: 0; /* Position the tooltip below the event */
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
       background-color: white;
-      border: 1px solid black;
-      padding: 5px;
-      border-radius: 5px;
+      border: 1px solid #ccc;
+      border-radius: .5rem;
+      padding: .5rem;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
 
     .tooltip h4 {

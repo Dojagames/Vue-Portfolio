@@ -1,31 +1,112 @@
 <script>
+import { reactive} from "vue";
 export default {
-    data() {
-        return {
-            
-        }
+  data() {
+    return {
+      viewText: true,
+      timelineActiveElements: {
+        academic: true,
+        projects: false,
+        work: false
+      },
+      timelineStartingYear: 2003,
+      events: {
+        academic: [
+          { start: "09/2003", end: "06/2007", header: "High School", text: "Graduated with honors." },
+          { start: "09/2008", end: "06/2012", header: "University", text: "BSc in Computer Science." }
+        ],
+        projects: [
+          { start: "01/2019", end: "12/2020", header: "Project A", text: "Developed a web application." },
+          { start: "02/2021", end: "06/2022", header: "Project B", text: "Implemented a mobile app." }
+        ],
+        work: [
+          { start: "03/2022", end: "Present", header: "Software Developer", text: "Working on cloud services." }
+        ]
+      },
+
+      tooltipsVisible: reactive([]),
+    };
+  },
+  computed: {
+    years() {
+      let start = this.timelineStartingYear;
+      const container = [];
+      const end = new Date().getFullYear() + 1;
+      for (start; start <= end; start++) {
+        container.push(start);
+      }
+      return container;
     },
-    props: {
-        
+    activeEvents() {
+      return Object.keys(this.timelineActiveElements).find(
+          (key) => this.timelineActiveElements[key]
+      );
     },
-    components: {   
-        
-    },
-    watch: {
-        
-    },
-    mounted() {
-        
-    },
-    created() {
-        document.title = "about me";
-    },
-    methods: {
-        GoHome(){
-            this.$router.push('/');
-        },
+    activeCategoryEvents() {
+      return this.events[this.activeEvents] || [];
     }
-}
+  },
+  methods: {
+    GoHome() {
+      this.$router.push("/");
+    },
+    setTimelineActiveElement(activeElement) {
+      Object.keys(this.timelineActiveElements).forEach(
+          (key) => (this.timelineActiveElements[key] = false)
+      );
+      this.timelineActiveElements[activeElement] = true;
+
+      if (activeElement === "projects") {
+        this.timelineStartingYear = 2018;
+      } else if (activeElement === "work") {
+        this.timelineStartingYear = 2022;
+      } else {
+        this.timelineStartingYear = 2003;
+      }
+    },
+
+    // Calculate the position of a dot on the timeline based on the start date
+    calculatePosition(startDate) {
+      const [startMonth, startYear] = startDate.split("/").map(Number);
+      const totalMonths = (startYear - this.timelineStartingYear) * 12 + startMonth;
+      const totalTimelineMonths =
+          (new Date().getFullYear() - this.timelineStartingYear + 1) * 12;
+      const positionPercentage = (totalMonths / totalTimelineMonths) * 100;
+      return `${positionPercentage}%`;
+    },
+
+    // Calculate the width of the line based on the start and end dates
+    calculateLineWidth(startDate, endDate) {
+      const [startMonth, startYear] = startDate.split("/").map(Number);
+      const [endMonth, endYear] = endDate === "Present"
+          ? [new Date().getMonth() + 1, new Date().getFullYear()]
+          : endDate.split("/").map(Number);
+      const totalStartMonths = (startYear - this.timelineStartingYear) * 12 + startMonth;
+      const totalEndMonths = (endYear - this.timelineStartingYear) * 12 + endMonth;
+      const durationMonths = totalEndMonths - totalStartMonths;
+      const totalTimelineMonths =
+          (new Date().getFullYear() - this.timelineStartingYear + 1) * 12;
+      const lineWidthPercentage = (durationMonths / totalTimelineMonths) * 100;
+      return `${lineWidthPercentage}%`;
+    },
+
+    // Show the tooltip for an event
+    showTooltip(index) {
+      this.tooltipsVisible[index] = true;
+    },
+
+    // Hide the tooltip for an event
+    hideTooltip(index) {
+      this.tooltipsVisible[index] = false;
+    },
+
+    // Check if the tooltip for an event is visible
+    isTooltipVisible(index) {
+      console.log(index , this.tooltipsVisible[index])
+      return this.tooltipsVisible[index];
+    }
+  }
+};
 </script>
 
 <template>
@@ -109,13 +190,57 @@ export default {
         </div><br><br>
 
         <div class="aboutContainer rightBound">
+          <span class="buttonWrapper">
+            <button :class="{activeBtnClass: viewText}" @click="viewText = true">text</button>
+            <button :class="{activeBtnClass: !viewText}" @click="viewText = false">timeline</button>
+          </span>
+
+          <div id="textJourney" v-if="viewText">
             <h1>Developer journey</h1>
             <p class="aboutText">From a young age, I have been passionate about technology. In 2017, I pursued my dream of developing software with an internship as a software developer at Funkwerk Kölleda. During this internship, I began my journey by learning PHP. By 2019, I transitioned to C++ and microcontroller development with Arduino. The following year, I completed my first DIY project: a self-designed desk lamp.<br><br>
               In high school, I wrote a term paper on DIY smart home systems. Alongside a classmate, I developed a smart home system with its own voice assistant and compatibility with commercial products. We also created custom gadgets, such as weather stations, smart outlets, and lamps. For my computer science class final project, I developed a top-down shooter game using Unity and C#.<br><br>
               After high school, I collaborated with a friend to build a chat application with encryption using vanilla JavaScript. In 2021, I began studying Computer Science at the Ilmenau University of Technology but left later that year for personal reasons. In 2022, I resumed my development journey with C#, creating a password manager and several small Windows applications, before returning to web development to rewrite the chat application.<br><br>
               In 2023, I used Vue.js to develop interfaces for my smart home system and created two web applications: another password manager and this portfolio page. Later that year, I developed three multiplayer games using JavaScript, Node.js, Socket.io, and Vue.js, along with a Spotify playlist editor utilizing the Spotify API and a new backend for my chat application.<br><br>
               Since 2023, I have been employed at AbsoluteGPS, where I build internal tools like a meeting scheduler and availability checker that suggests solutions when conflicts arise. My most recent project is a cycling route planning tool.
-           </p>
+            </p>
+          </div>
+
+          <div id="timelineJourney" v-else>
+            <div id="timelineButtonWrapper">
+              <button :class="{ activeBtnClass: timelineActiveElements['academic'] }" @click="setTimelineActiveElement('academic')">
+                academic
+              </button>
+              <button :class="{ activeBtnClass: timelineActiveElements['projects'] }" @click="setTimelineActiveElement('projects')">
+                projects
+              </button>
+              <button :class="{ activeBtnClass: timelineActiveElements['work'] }" @click="setTimelineActiveElement('work')">
+                work
+              </button>
+            </div>
+            <div id="timelineBar">
+              <div class="timelineStampWrapper">
+                <div class="timelineStamp" v-for="year in years" :key="year">
+                  <p>{{ year }}</p>
+                </div>
+              </div>
+              <div id="timelineEventWrapper">
+                <div v-for="(event, index) in activeCategoryEvents" :key="index" class="timelineEvent"
+                     :style="{ left: calculatePosition(event.start) }"
+                     @mouseover="showTooltip(index)"
+                     @mouseleave="hideTooltip(index)">
+                  <div class="eventDot"></div>
+                  <div class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
+                  <div v-if="isTooltipVisible(index)" class="tooltip">
+                    <h4>{{ event.header }}</h4>
+                    <p>{{ event.text }}</p>
+                    <small>{{ event.start }} - {{ event.end }}</small>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div><br><br>
 
         <div class="aboutContainer leftBound">
@@ -266,5 +391,176 @@ export default {
             width: 50%;
         }
     }
+
+
+
+
+  /* timeline switch buttons */
+
+    .buttonWrapper button{
+      position: relative;
+      margin-left: 1rem;
+
+      width: fit-content;
+      height: fit-content;
+      padding: .3rem 2rem;
+
+      border-radius: 1rem;
+      border: none;
+      outline: none;
+      background-color: #FFFFFF40;
+      backdrop-filter: blur(4px);
+      font-size: 1.2rem;
+      font-weight: bold;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+    }
+
+
+    .activeBtnClass::after{
+      content: '';
+      width: .75rem;
+      height: .75rem;
+      top: .2rem;
+      right: .4rem;
+      position: absolute;
+      background-color: rgb(60, 179, 113);
+      border-radius: 50%;
+      border: 1px solid #00000010;
+    }
+
+
+    /* timeline */
+
+
+
+    #timelineJourney{
+      padding: 2rem 0;
+    }
+
+    #timelineBar {
+      width: 100%;
+      height: 2rem;
+      background-color: #00ffc8;
+      border-radius: 4rem;
+      position: relative; /* For positioning the vertical lines */
+    }
+
+    .timelineStampWrapper {
+      position: relative; /* Allows positioning of the vertical line and text */
+      width: 100%;
+      height: 100%;
+      display: flex; /* Enable Flexbox */
+      justify-content: space-between; /* Distribute items evenly with space in between */
+      align-items: center;
+    }
+
+    .timelineStamp {
+      position: relative; /* Ensure the position of text and line is properly controlled */
+      text-align: center;
+      width: fit-content;
+      height: fit-content;
+    }
+
+    .timelineStamp::after {
+      content: '';
+      position: absolute;
+      top: 0; /* Align the line with the top of the bar */
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%); /* Center the line horizontally */
+      width: 1px;
+      height: 2rem; /* Length of the vertical line */
+      background-color: black; /* Line color */
+    }
+
+    .timelineStamp:first-child::after,
+    .timelineStamp:last-child::after {
+      content: none; /* Remove the line for the first and last elements */
+    }
+
+    .timelineStamp p {
+      position: absolute; /* Ensure the text stays below the bar */
+      top: 2.5rem; /* Push text below the bar */
+      left: 50%;
+      transform: translateX(-50%); /* Center the text */
+      margin: 0;
+      font-size: 1rem; /* Adjust font size */
+    }
+
+    #timelineButtonWrapper{
+      margin: 1rem;
+    }
+
+    #timelineButtonWrapper button{
+      position: relative;
+      margin-left: 1rem;
+
+      width: fit-content;
+      height: fit-content;
+      padding: .3rem 2rem;
+
+      border-radius: 1rem;
+      border: none;
+      outline: none;
+      background-color: #FFFFFF40;
+      backdrop-filter: blur(4px);
+      font-size: .9rem;
+      letter-spacing: 1.1px;
+
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+    }
+
+
+    .timelineEvent {
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+
+    .eventDot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: black;
+      position: absolute;
+    }
+
+    .eventLine {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 2px;
+      background-color: black;
+    }
+
+    .tooltip {
+      position: absolute;
+      top: 0;
+      transform: translateY(-100%) translateX(-50%);
+      background-color: white;
+      border: 1px solid black;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    .tooltip h4 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .tooltip p {
+      margin: 0;
+      font-size: 0.8rem;
+    }
+
+
+
+
+
+
 
 </style>

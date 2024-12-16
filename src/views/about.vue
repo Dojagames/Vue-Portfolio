@@ -149,6 +149,7 @@ export default {
       this.$nextTick(() => {
         let startingElement = document.getElementsByClassName("startingDateEvent")[0];
         let endingElement = document.getElementsByClassName("endingDateEvent")[0];
+        if (!endingElement) return;
         if(startingElement.getBoundingClientRect().left + startingElement.getBoundingClientRect().width > endingElement.getBoundingClientRect().left) {
           endingElement.style.left = startingElement.getBoundingClientRect().width + 10 + "px";
         }
@@ -325,7 +326,7 @@ export default {
                   <!-- Set the width of the event line based on the total timeline width -->
                   <div class="startingDateEvent eventDate" v-if="isTooltipVisible(index)" ref="startingDateEvent">{{event.start}}</div>
                   <div v-if="isTooltipVisible(index) && event.end" class="eventLine" :style="{ width: calculateLineWidth(event.start, event.end) }"></div>
-                  <div class="endingDateEvent eventDate" :style="{ left: calculateEndingDateLeft(event.start, event.end) }" ref="endingDateEvent" v-if="isTooltipVisible(index) && event.end">{{event.end}}</div>
+                  <div v-if="isTooltipVisible(index) && event.end" class="endingDateEvent eventDate" :style="{ left: calculateEndingDateLeft(event.start, event.end) }" ref="endingDateEvent" >{{event.end}}</div>
                   <!-- Tooltip -->
                   <div v-if="isTooltipVisible(index)" class="tooltip">
                     <h4>{{ event.header }}</h4>

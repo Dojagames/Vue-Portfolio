@@ -308,8 +308,8 @@ export default {
             </div>
             <div id="timelineBar" ref="timelineBar">
               <div class="timelineStampWrapper">
-                <div class="timelineStamp" v-for="year in years" :key="year">
-                  <p>{{ year }}</p>
+                <div class="timelineStamp" v-for="(year, index) in years" :key="year">
+                  <p  :class="{ 'plusMargin': index % 2 }" class="timelineStampText">{{ year }}</p>
                 </div>
               </div>
               <div id="timelineEventWrapper">
@@ -594,7 +594,7 @@ export default {
       content: none; /* Remove the line for the first and last elements */
     }
 
-    .timelineStamp p {
+    .timelineStampText {
       position: absolute; /* Ensure the text stays below the bar */
       top: 2.5rem; /* Push text below the bar */
       left: 50%;
@@ -723,7 +723,11 @@ export default {
     }
 
 
-
+    @media only screen and (orientation: portrait) {
+      .plusMargin{
+        top: 3.5rem;
+      }
+    }
 
 
 
